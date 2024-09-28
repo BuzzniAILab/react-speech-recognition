@@ -4,6 +4,7 @@ import { isNative } from './NativeSpeechRecognition'
 
 export default class RecognitionManager {
   constructor(SpeechRecognition, { onAudioEnd, onAudioStart }) {
+    console.log('RecognitionManager::constructor::', onAudioStart)
     this.recognition = null
     this.pauseAfterDisconnect = false
     this.interimTranscript = ''
