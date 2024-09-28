@@ -23,7 +23,7 @@ export default class RecognitionManager {
     this.setSpeechRecognition = this.setSpeechRecognition.bind(this)
     this.disableRecognition = this.disableRecognition.bind(this)
     this.startAudioCapturing = this.startAudioCapturing.bind(this, onAudioStart)
-    this.endAudioCapturing = this.endAudioCapturing.bind(this, onAudioEnd)
+    this.endAudioCapturing = this.endAudioCapturing.bind(this)
 
     this.setSpeechRecognition(SpeechRecognition)
 
@@ -32,12 +32,12 @@ export default class RecognitionManager {
     }
   }
 
-  startAudioCapturing(callback) {
-    callback?.()
+  startAudioCapturing() {
+    this.onAudioStart?.()
   }
 
-  endAudioCapturing(callback) {
-    callback?.()
+  endAudioCapturing() {
+    this.onAudioEnd?.()
   }
 
   setSpeechRecognition(SpeechRecognition) {
@@ -146,7 +146,7 @@ export default class RecognitionManager {
       this.emitListeningChange(false)
     } else if (this.recognition) {
       if (this.recognition.continuous) {
-        this.startListening({ continuous: this.recognition.continuous, onAudioEnd: this.onAudioEnd, onAudioStart: this.onAudioStart })
+        this.startListening({ continuous: this.recognition.continuous })
       } else {
         this.emitListeningChange(false)
       }

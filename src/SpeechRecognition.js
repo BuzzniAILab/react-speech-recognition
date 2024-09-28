@@ -203,8 +203,8 @@ const SpeechRecognition = {
     const recognitionManager = SpeechRecognition.getRecognitionManager({ onAudioEnd, onAudioStart })
     await recognitionManager.startListening({ continuous, language })
   },
-  stopListening: async () => {
-    const recognitionManager = SpeechRecognition.getRecognitionManager()
+  stopListening: async ({ onAudioEnd, onAudioStart }) => {
+    const recognitionManager = SpeechRecognition.getRecognitionManager({ onAudioEnd, onAudioStart })
     await recognitionManager.stopListening()
   },
   abortListening: async () => {
