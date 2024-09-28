@@ -3,7 +3,7 @@ import { debounce, concatTranscripts, browserSupportsPolyfills } from './utils'
 import { isNative } from './NativeSpeechRecognition'
 
 export default class RecognitionManager {
-  constructor(SpeechRecognition) {
+  constructor(SpeechRecognition, { onAudioEnd, onAudioStart }) {
     this.recognition = null
     this.pauseAfterDisconnect = false
     this.interimTranscript = ''
@@ -20,12 +20,22 @@ export default class RecognitionManager {
     this.abortListening = this.abortListening.bind(this)
     this.setSpeechRecognition = this.setSpeechRecognition.bind(this)
     this.disableRecognition = this.disableRecognition.bind(this)
+    this.startAudioCapturing = this.startAudioCapturing.bind(this, onAudioStart)
+    this.endAudioCapturing = this.endAudioCapturing.bind(this, onAudioEnd)
 
     this.setSpeechRecognition(SpeechRecognition)
 
     if (isAndroid()) {
       this.updateFinalTranscript = debounce(this.updateFinalTranscript, 250, true)
     }
+  }
+
+  startAudioCapturing(callback) {
+    callback?.()
+  }
+
+  endAudioCapturing(callback) {
+    callback?.()
   }
 
   setSpeechRecognition(SpeechRecognition) {
