@@ -4,7 +4,6 @@ import { isNative } from './NativeSpeechRecognition'
 
 export default class RecognitionManager {
   constructor(SpeechRecognition, { onAudioEnd, onAudioStart }) {
-    console.log('RecognitionManager::constructor::', onAudioStart)
     this.recognition = null
     this.pauseAfterDisconnect = false
     this.interimTranscript = ''
@@ -14,6 +13,8 @@ export default class RecognitionManager {
     this.subscribers = {}
     this.onStopListening = () => {}
     this.previousResultWasFinalOnly = false
+    this.onAudioEnd = onAudioEnd
+    this.onAudioStart = onAudioStart
 
     this.resetTranscript = this.resetTranscript.bind(this)
     this.startListening = this.startListening.bind(this)
@@ -145,7 +146,7 @@ export default class RecognitionManager {
       this.emitListeningChange(false)
     } else if (this.recognition) {
       if (this.recognition.continuous) {
-        this.startListening({ continuous: this.recognition.continuous })
+        this.startListening({ continuous: this.recognition.continuous, onAudioEnd: this.onAudioEnd, onAudioStart: this.onAudioStart })
       } else {
         this.emitListeningChange(false)
       }
@@ -197,6 +198,7 @@ export default class RecognitionManager {
       return
     }
 
+    this.onAudioStart?.()
     const isContinuousChanged = continuous !== this.recognition.continuous
     const isLanguageChanged = language && language !== this.recognition.lang
     if (isContinuousChanged || isLanguageChanged) {
