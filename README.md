@@ -1,10 +1,17 @@
-# react-speech-recognition
+# Forked from react-speech-recognition
+
+Speech Recognition API에서 `start` 이벤트가 발생할 때 `audiostart` 이벤트도 함께 발생해서
+
+`audiostart`와 `audioend` 이벤트에 대한 제어를 추가하기 위해 fork했습니다.
+
+`audioend` 이벤트에 대한 제어는 아직 구현하지 않았으므로 필요할 때 해당 이벤트에 대한 제어를 추가해주세요.
+
+# @buzzniailab/react-speech-recognition
 A React hook that converts speech from the microphone to text and makes it available to your React components.
 
-[![npm version](https://img.shields.io/npm/v/react-speech-recognition.svg)](https://www.npmjs.com/package/react-speech-recognition)
-[![npm downloads](https://img.shields.io/npm/dm/react-speech-recognition.svg)](https://www.npmjs.com/package/react-speech-recognition)
-[![license](https://img.shields.io/github/license/JamesBrill/react-speech-recognition.svg)](https://opensource.org/licenses/MIT)
-[![Coverage Status](https://coveralls.io/repos/github/JamesBrill/react-speech-recognition/badge.svg?branch=master)](https://coveralls.io/github/JamesBrill/react-speech-recognition?branch=master)
+## CHANGELOG
+
+`useSpeechRecognition`와 `SpeechRecognition`에 `onAudioStart` 콜백을 받아 Speech Recognition API의 `start` 이벤트가 발생할 때 해당 콜백을 실행합니다.
 
 ## How it works
 `useSpeechRecognition` is a React hook that gives a component access to a transcript of speech picked up from the user's microphone.
@@ -33,13 +40,13 @@ This version requires React 16.8 so that React hooks can be used. If you're used
 To install:
 
 ```shell
-npm install --save react-speech-recognition
+npm install --save @buzzniailab/react-speech-recognition
 ```
 
 To import in your React code:
 
 ```js
-import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition'
+import SpeechRecognition, { useSpeechRecognition } from '@buzzniailab/react-speech-recognition'
 ```
 
 ## Basic example
@@ -48,7 +55,7 @@ The most basic example of a component using this hook would be:
 
 ```jsx
 import React from 'react';
-import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+import SpeechRecognition, { useSpeechRecognition } from '@buzzniailab/react-speech-recognition';
 
 const Dictaphone = () => {
   const {
