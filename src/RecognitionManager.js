@@ -234,8 +234,10 @@ export default class RecognitionManager {
   }
 
   async stopListening() {
+    console.log('speech::manager::stop', this.onAudioEnd)
     this.disconnect('STOP')
     this.emitListeningChange(false)
+    this.onAudioEnd?.()
     await new Promise(resolve => {
       this.onStopListening = resolve
     })

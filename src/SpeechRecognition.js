@@ -199,12 +199,14 @@ const SpeechRecognition = {
     const recognitionManager = SpeechRecognition.getRecognitionManager()
     return recognitionManager.getRecognition()
   },
-  startListening: async ({ continuous, language, onAudioEnd, onAudioStart } = {}) => {
-    const recognitionManager = SpeechRecognition.getRecognitionManager({ onAudioEnd, onAudioStart })
+  startListening: async ({ continuous, language, onAudioStart } = {}) => {
+    console.log('speech::startListening::', onAudioStart)
+    const recognitionManager = SpeechRecognition.getRecognitionManager({ onAudioStart })
     await recognitionManager.startListening({ continuous, language })
   },
-  stopListening: async ({ onAudioEnd, onAudioStart }) => {
-    const recognitionManager = SpeechRecognition.getRecognitionManager({ onAudioEnd, onAudioStart })
+  stopListening: async ({ onAudioEnd }) => {
+    console.log('speech::stopListening::', onAudioEnd)
+    const recognitionManager = SpeechRecognition.getRecognitionManager({ onAudioEnd })
     await recognitionManager.stopListening()
   },
   abortListening: async () => {
