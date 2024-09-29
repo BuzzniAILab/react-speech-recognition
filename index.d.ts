@@ -17,8 +17,10 @@ export interface ListeningOptions {
 
 interface SpeechRecognition {
   getRecognition(): globalThis.SpeechRecognition | null;
-  startListening(options?: ListeningOptions): Promise<void>;
-  stopListening(): Promise<void>;
+  startListening(
+    options?: ListeningOptions & { onAudioStart?: () => void }
+  ): Promise<void>;
+  stopListening(options?: { onAudioEnd?: () => void }): Promise<void>;
   abortListening(): Promise<void>;
   browserSupportsSpeechRecognition(): boolean;
   applyPolyfill(speechRecognitionPolyfill: any): void;
