@@ -1,10 +1,14 @@
 # Forked from react-speech-recognition
 
-Speech Recognition API에서 `start` 이벤트가 발생할 때 `audiostart` 이벤트도 함께 발생해서
+[react-speech-recognition]을 fork하였습니다.
 
-`audiostart`와 `audioend` 이벤트에 대한 제어를 추가하기 위해 fork했습니다.
+## 추가된 기능
 
-`audioend` 이벤트에 대한 제어는 아직 구현하지 않았으므로 필요할 때 해당 이벤트에 대한 제어를 추가해주세요.
+* :white_check_mark: Web Speech Recognition API의 `audiostart` 이벤트 제어
+
+Web Speech Recognition API에서 `start` 이벤트가 발생할 때 `audiostart` 이벤트도 함께 발생합니다.
+
+그래서 `audiostart`에 대해서도 이벤트 제어가 가능하도록 수정하였습니다.
 
 # @buzzniailab/react-speech-recognition
 A React hook that converts speech from the microphone to text and makes it available to your React components.
