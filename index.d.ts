@@ -32,6 +32,7 @@ export interface SpeechRecognitionOptions {
   commands?: readonly Command[] | undefined;
   onAudioEnd?: () => void;
   onAudioStart?: () => void;
+  onError?: (error: string) => void;
 }
 
 export function useSpeechRecognition(options?: SpeechRecognitionOptions): {

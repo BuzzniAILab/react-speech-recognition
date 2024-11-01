@@ -21,8 +21,9 @@ const useSpeechRecognition = ({
   commands = [],
   onAudioEnd,
   onAudioStart,
+  onError,
 } = {}) => {
-  const [recognitionManager] = useState(SpeechRecognition.getRecognitionManager({ onAudioEnd, onAudioStart }))
+  const [recognitionManager] = useState(SpeechRecognition.getRecognitionManager({ onAudioEnd, onAudioStart, onError }))
   const [browserSupportsSpeechRecognition, setBrowserSupportsSpeechRecognition] =
     useState(_browserSupportsSpeechRecognition)
   const [browserSupportsContinuousListening, setBrowserSupportsContinuousListening] =
@@ -189,9 +190,9 @@ const SpeechRecognition = {
     _browserSupportsSpeechRecognition = !!NativeSpeechRecognition
     _browserSupportsContinuousListening = _browserSupportsSpeechRecognition && !isAndroid()
   },
-  getRecognitionManager: ({ onAudioEnd, onAudioStart }) => {
+  getRecognitionManager: ({ onAudioEnd, onAudioStart, onError }) => {
     if (!recognitionManager) {
-      recognitionManager = new RecognitionManager(NativeSpeechRecognition, { onAudioEnd, onAudioStart })
+      recognitionManager = new RecognitionManager(NativeSpeechRecognition, { onAudioEnd, onAudioStart, onError })
     }
     return recognitionManager
   },

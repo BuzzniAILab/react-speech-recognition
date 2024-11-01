@@ -3,7 +3,7 @@ import { debounce, concatTranscripts, browserSupportsPolyfills } from './utils'
 import { isNative } from './NativeSpeechRecognition'
 
 export default class RecognitionManager {
-  constructor(SpeechRecognition, { onAudioEnd, onAudioStart }) {
+  constructor(SpeechRecognition, { onAudioEnd, onAudioStart, onError }) {
     this.recognition = null
     this.pauseAfterDisconnect = false
     this.interimTranscript = ''
@@ -15,6 +15,7 @@ export default class RecognitionManager {
     this.previousResultWasFinalOnly = false
     this.onAudioEnd = onAudioEnd
     this.onAudioStart = onAudioStart
+    this.onErrorProps = onError
 
     this.resetTranscript = this.resetTranscript.bind(this)
     this.startListening = this.startListening.bind(this)
@@ -133,9 +134,12 @@ export default class RecognitionManager {
   }
 
   onError(event) {
-    if (event && event.error && event.error === 'not-allowed') {
-      this.emitMicrophoneAvailabilityChange(false)
-      this.disableRecognition()
+    if (event && event.error) {
+      if (event.error === 'not-allowed') {
+        this.emitMicrophoneAvailabilityChange(false)
+        this.disableRecognition()
+      }
+      this.onErrorProps?.(event.error)
     }
   }
 
