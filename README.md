@@ -18,6 +18,10 @@ Web Speech Recognition API의 `onerror` 이벤트를 통해 에러 종류를 파
 
 ## 적용 방법
 
+```bash
+yarn add git+https://github.com/BuzzniAILab/react-speech-recognition.git
+```
+
 # @buzzniailab/react-speech-recognition
 A React hook that converts speech from the microphone to text and makes it available to your React components.
 

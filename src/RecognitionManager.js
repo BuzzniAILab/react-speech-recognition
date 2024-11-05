@@ -139,7 +139,7 @@ export default class RecognitionManager {
         this.emitMicrophoneAvailabilityChange(false)
         this.disableRecognition()
       }
-      this.onErrorProps?.(event.error)
+      this.onErrorProps?.(event)
     }
   }
 
