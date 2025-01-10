@@ -1,5 +1,5 @@
 import isAndroid from './isAndroid'
-import { debounce, concatTranscripts, browserSupportsPolyfills } from './utils'
+import { debounce, concatTranscripts, browserSupportsPolyfills, sendSlack } from './utils'
 import { isNative } from './NativeSpeechRecognition'
 
 export default class RecognitionManager {
@@ -146,6 +146,7 @@ export default class RecognitionManager {
   onRecognitionDisconnect() {
     this.onStopListening()
     this.listening = false
+    sendSlack('onRecognitionDisconnect::listening::', this.listening)
     if (this.pauseAfterDisconnect) {
       this.emitListeningChange(false)
     } else if (this.recognition) {
@@ -205,6 +206,8 @@ export default class RecognitionManager {
     this.onAudioStart?.()
     const isContinuousChanged = continuous !== this.recognition.continuous
     const isLanguageChanged = language && language !== this.recognition.lang
+    sendSlack(`isContinuousChanged: ${isContinuousChanged}, isLanguageChanged: ${isLanguageChanged}, listening: ${this.listening}`)
+    sendSlack(`recognition: ${this.recognition.continuous}`)
     if (isContinuousChanged || isLanguageChanged) {
       if (this.listening) {
         await this.stopListening()
