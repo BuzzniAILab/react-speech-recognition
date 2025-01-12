@@ -81,9 +81,12 @@ const browserSupportsPolyfills = () => {
 }
 
 const sendSlack = (message) => {
-  fetch('https://hooks.slack.com/services/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', {
+  fetch('https://hooks.slack.com/services/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', {
     method: 'POST',
-    body: JSON.stringify({ message: '레미 speech recognition 테스트::' + message })
+    body: JSON.stringify({ message: '레미 speech recognition 테스트::' + message }),
+    headers: {
+      "Content-Type": "application/json"
+    }
   })
 }
 
