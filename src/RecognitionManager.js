@@ -106,6 +106,7 @@ export default class RecognitionManager {
   }
 
   disconnect(disconnectType) {
+    sendSlack(`disconnect(${disconnectType})`)
     if (this.recognition && this.listening) {
       switch (disconnectType) {
         case 'ABORT':
@@ -125,6 +126,7 @@ export default class RecognitionManager {
   }
 
   disableRecognition() {
+    sendSlack('disableRecognition()')
     if (this.recognition) {
       this.recognition.onresult = () => {}
       this.recognition.onend = () => {}
@@ -136,9 +138,9 @@ export default class RecognitionManager {
   }
 
   onError(event) {
+    sendSlack('onError()::' + event.error)
     if (event && event.error) {
       if (event.error === 'not-allowed') {
-        sendSlack('onError::not-allowed')
         this.emitMicrophoneAvailabilityChange(false)
         this.disableRecognition()
       }
@@ -237,6 +239,7 @@ export default class RecognitionManager {
   }
 
   async abortListening() {
+    sendSlack('abortListening()')
     this.disconnect('ABORT')
     this.emitListeningChange(false)
     await new Promise(resolve => {
@@ -245,6 +248,7 @@ export default class RecognitionManager {
   }
 
   async stopListening() {
+    sendSlack('stopListening()')
     this.disconnect('STOP')
     this.emitListeningChange(false)
     await new Promise(resolve => {
