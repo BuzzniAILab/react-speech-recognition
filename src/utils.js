@@ -83,10 +83,10 @@ const browserSupportsPolyfills = () => {
 const sendSlack = (message) => {
   console.log('SpeechRecognition::' + message)
   try {
-    // fetch('https://hooks.slack.com/services/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', {
-    //   method: 'POST',
-    //   body: JSON.stringify({ text: '레미 speech recognition 테스트::' + message })
-    // })
+    fetch('https://hooks.slack.com/services/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', {
+      method: 'POST',
+      body: JSON.stringify({ text: '레미 speech recognition 테스트::' + message })
+    })
   } catch (error) {
     console.error('SpeechRecognition Error::', error)
   }
