@@ -212,7 +212,7 @@ export default class RecognitionManager {
     this.onAudioStart?.()
     const isContinuousChanged = continuous !== this.recognition.continuous
     const isLanguageChanged = language && language !== this.recognition.lang
-    sendSlack('startListening()::2', isContinuousChanged, isLanguageChanged, this.listening)
+    sendSlack(`startListening()::2::${isContinuousChanged}, ${isLanguageChanged}, ${this.listening}`)
     if (isContinuousChanged || isLanguageChanged) {
       if (this.listening) {
         await this.stopListening()
