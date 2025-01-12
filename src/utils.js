@@ -80,13 +80,21 @@ const browserSupportsPolyfills = () => {
     (window.AudioContext !== undefined || window.webkitAudioContext !== undefined)
 }
 
-const sendSlack = (message) => {
+const sendSlack = (token,message) => {
   console.log('SpeechRecognition::' + message)
+
+  if (!token) return
+
   try {
-    // fetch('https://hooks.slack.com/services/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', {
-    //   method: 'POST',
-    //   body: JSON.stringify({ text: '레미 speech recognition 테스트::' + message })
-    // })
+    const formdata = new FormData()
+    formdata.append('token', token)
+    fetch(
+      `https://slack.com/api/chat.postMessage?channel=C088NTUB9S5&text=${encodeURIComponent(message)}`,
+      {
+        method: 'POST',
+        body: formdata
+      }
+    )
   } catch (error) {
     console.error('SpeechRecognition Error::', error)
   }

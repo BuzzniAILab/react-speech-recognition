@@ -33,6 +33,7 @@ export interface SpeechRecognitionOptions {
   onAudioEnd?: () => void;
   onAudioStart?: () => void;
   onError?: (params: { error: string; message?: string }) => void;
+  slackToken?: string;
 }
 
 export function useSpeechRecognition(options?: SpeechRecognitionOptions): {

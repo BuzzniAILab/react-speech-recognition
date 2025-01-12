@@ -22,8 +22,9 @@ const useSpeechRecognition = ({
   onAudioEnd,
   onAudioStart,
   onError,
+  slackToken,
 } = {}) => {
-  const [recognitionManager] = useState(SpeechRecognition.getRecognitionManager({ onAudioEnd, onAudioStart, onError }))
+  const [recognitionManager] = useState(SpeechRecognition.getRecognitionManager({ onAudioEnd, onAudioStart, onError, slackToken }))
   const [browserSupportsSpeechRecognition, setBrowserSupportsSpeechRecognition] =
     useState(_browserSupportsSpeechRecognition)
   const [browserSupportsContinuousListening, setBrowserSupportsContinuousListening] =
@@ -190,9 +191,9 @@ const SpeechRecognition = {
     _browserSupportsSpeechRecognition = !!NativeSpeechRecognition
     _browserSupportsContinuousListening = _browserSupportsSpeechRecognition && !isAndroid()
   },
-  getRecognitionManager: ({ onAudioEnd, onAudioStart, onError }) => {
+  getRecognitionManager: ({ onAudioEnd, onAudioStart, onError, slackToken }) => {
     if (!recognitionManager) {
-      recognitionManager = new RecognitionManager(NativeSpeechRecognition, { onAudioEnd, onAudioStart, onError })
+      recognitionManager = new RecognitionManager(NativeSpeechRecognition, { onAudioEnd, onAudioStart, onError, slackToken })
     }
     return recognitionManager
   },
