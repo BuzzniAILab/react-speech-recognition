@@ -1,5 +1,5 @@
 import isAndroid from './isAndroid'
-import { debounce, concatTranscripts, browserSupportsPolyfills, sendSlack } from './utils'
+import { debounce, concatTranscripts, browserSupportsPolyfills } from './utils'
 import { isNative } from './NativeSpeechRecognition'
 
 export default class RecognitionManager {
@@ -67,7 +67,6 @@ export default class RecognitionManager {
   }
 
   emitListeningChange(listening) {
-    sendSlack(this.slackToken, `emitListeningChange(${listening})`)
     this.listening = listening
     Object.keys(this.subscribers).forEach((id) => {
       const { onListeningChange } = this.subscribers[id]
@@ -76,7 +75,6 @@ export default class RecognitionManager {
   }
 
   emitMicrophoneAvailabilityChange(isMicrophoneAvailable) {
-    sendSlack(this.slackToken, `emitMicrophoneAvailabilityChange(${isMicrophoneAvailable})`)
     this.isMicrophoneAvailable = isMicrophoneAvailable
     Object.keys(this.subscribers).forEach((id) => {
       const { onMicrophoneAvailabilityChange } = this.subscribers[id]
@@ -107,7 +105,6 @@ export default class RecognitionManager {
   }
 
   disconnect(disconnectType) {
-    sendSlack(this.slackToken, `disconnect(${disconnectType})`)
     if (this.recognition && this.listening) {
       switch (disconnectType) {
         case 'ABORT':
@@ -127,7 +124,6 @@ export default class RecognitionManager {
   }
 
   disableRecognition() {
-    sendSlack(this.slackToken, 'disableRecognition()')
     if (this.recognition) {
       this.recognition.onresult = () => {}
       this.recognition.onend = () => {}
@@ -139,7 +135,6 @@ export default class RecognitionManager {
   }
 
   onError(event) {
-    sendSlack(this.slackToken, 'onError()::' + event.error)
     if (event && event.error) {
       if (event.error === 'not-allowed') {
         this.emitMicrophoneAvailabilityChange(false)
@@ -150,7 +145,6 @@ export default class RecognitionManager {
   }
 
   onRecognitionDisconnect() {
-    sendSlack(this.slackToken, 'onRecognitionDisconnect()')
     this.onStopListening()
     this.listening = false
     if (this.pauseAfterDisconnect) {
@@ -205,7 +199,6 @@ export default class RecognitionManager {
   }
 
   async startListening({ continuous = false, language, onStartException } = {}) {
-    sendSlack(this.slackToken, 'startListening()::1', !this.recognition)
     if (!this.recognition) {
       return
     }
@@ -213,7 +206,6 @@ export default class RecognitionManager {
     this.onAudioStart?.()
     const isContinuousChanged = continuous !== this.recognition.continuous
     const isLanguageChanged = language && language !== this.recognition.lang
-    sendSlack(this.slackToken, `startListening()::2:: continuous:${isContinuousChanged}, language:${isLanguageChanged}, listening:${this.listening}`)
     if (isContinuousChanged || isLanguageChanged) {
       if (this.listening) {
         await this.stopListening()
@@ -231,7 +223,6 @@ export default class RecognitionManager {
         this.emitListeningChange(true)
       } catch (e) {
         // DOMExceptions indicate a redundant microphone start - safe to swallow
-        sendSlack(this.slackToken, `startlistening()::catch::${!(e instanceof DOMException)}::$${JSON.stringify(e)}`)
         if (!(e instanceof DOMException)) {
           this.emitMicrophoneAvailabilityChange(false)
         }
@@ -242,7 +233,6 @@ export default class RecognitionManager {
   }
 
   async abortListening() {
-    sendSlack(this.slackToken, 'abortListening()')
     this.disconnect('ABORT')
     this.emitListeningChange(false)
     await new Promise(resolve => {
@@ -251,7 +241,6 @@ export default class RecognitionManager {
   }
 
   async stopListening() {
-    sendSlack(this.slackToken, 'stopListening()')
     this.disconnect('STOP')
     this.emitListeningChange(false)
     await new Promise(resolve => {
@@ -265,7 +254,6 @@ export default class RecognitionManager {
 
   async start() {
     if (this.recognition && !this.listening) {
-      sendSlack(this.slackToken, 'start()')
       await this.recognition.start()
       this.listening = true
     }
@@ -273,7 +261,6 @@ export default class RecognitionManager {
 
   stop() {
     if (this.recognition && this.listening) {
-      sendSlack(this.slackToken, 'stop()')
       this.recognition.stop()
       this.listening = false
     }
@@ -281,7 +268,6 @@ export default class RecognitionManager {
 
   abort() {
     if (this.recognition && this.listening) {
-      sendSlack(this.slackToken, 'abort()')
       this.recognition.abort()
       this.listening = false
     }
