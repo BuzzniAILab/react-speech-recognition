@@ -213,7 +213,7 @@ export default class RecognitionManager {
     this.onAudioStart?.()
     const isContinuousChanged = continuous !== this.recognition.continuous
     const isLanguageChanged = language && language !== this.recognition.lang
-    sendSlack(this.slackToken, `startListening()::2::${isContinuousChanged}, ${isLanguageChanged}, ${this.listening}`)
+    sendSlack(this.slackToken, `startListening()::2:: continuous:${isContinuousChanged}, language:${isLanguageChanged}, listening:${this.listening}`)
     if (isContinuousChanged || isLanguageChanged) {
       if (this.listening) {
         await this.stopListening()
@@ -231,7 +231,7 @@ export default class RecognitionManager {
         this.emitListeningChange(true)
       } catch (e) {
         // DOMExceptions indicate a redundant microphone start - safe to swallow
-        sendSlack(this.slackToken, 'startlistening()::catch')
+        sendSlack(this.slackToken, `startlistening()::catch::${!(e instanceof DOMException)}::$${JSON.stringify(e)}`)
         if (!(e instanceof DOMException)) {
           this.emitMicrophoneAvailabilityChange(false)
         }
