@@ -44,8 +44,7 @@ export function useSpeechRecognition(options?: SpeechRecognitionOptions): {
   resetTranscript: () => void;
   browserSupportsSpeechRecognition: boolean;
   isMicrophoneAvailable: boolean;
-  onAudioEnd?: () => void;
-  onAudioStart?: () => void;
+  handleMicrophoneAvailabilityChange: (isMicrophoneAvailable: boolean) => void;
 };
 
 declare const SpeechRecognition: SpeechRecognition;

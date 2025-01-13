@@ -134,6 +134,10 @@ const useSpeechRecognition = ({
     }, [clearTranscriptOnListen]
   )
 
+  const handleMicrophoneAvailabilityChange = useCallback((isMicrophoneAvailable) => {
+    setMicrophoneAvailable(isMicrophoneAvailable)
+  }, [])
+
   useEffect(() => {
     const id = SpeechRecognition.counter
     SpeechRecognition.counter += 1
@@ -167,7 +171,8 @@ const useSpeechRecognition = ({
     isMicrophoneAvailable,
     resetTranscript,
     browserSupportsSpeechRecognition,
-    browserSupportsContinuousListening
+    browserSupportsContinuousListening,
+    handleMicrophoneAvailabilityChange
   }
 }
 const SpeechRecognition = {
