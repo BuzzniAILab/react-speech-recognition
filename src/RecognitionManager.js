@@ -235,6 +235,7 @@ export default class RecognitionManager {
         if (!(e instanceof DOMException)) {
           this.emitMicrophoneAvailabilityChange(false)
         }
+        this.stopListening()
       }
     }
   }
