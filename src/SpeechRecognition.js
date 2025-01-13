@@ -22,7 +22,7 @@ const useSpeechRecognition = ({
   onAudioEnd,
   onAudioStart,
   onError,
-  slackToken,
+  slackToken
 } = {}) => {
   const [recognitionManager] = useState(SpeechRecognition.getRecognitionManager({ onAudioEnd, onAudioStart, onError, slackToken }))
   const [browserSupportsSpeechRecognition, setBrowserSupportsSpeechRecognition] =
@@ -206,9 +206,9 @@ const SpeechRecognition = {
     const recognitionManager = SpeechRecognition.getRecognitionManager()
     return recognitionManager.getRecognition()
   },
-  startListening: async ({ continuous, language, onAudioStart } = {}) => {
+  startListening: async ({ continuous, language, onAudioStart, onStartException } = {}) => {
     const recognitionManager = SpeechRecognition.getRecognitionManager({ onAudioStart })
-    await recognitionManager.startListening({ continuous, language })
+    await recognitionManager.startListening({ continuous, language, onStartException })
   },
   stopListening: async ({ onAudioEnd }) => {
     const recognitionManager = SpeechRecognition.getRecognitionManager({ onAudioEnd })

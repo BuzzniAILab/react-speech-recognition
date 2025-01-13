@@ -18,7 +18,10 @@ export interface ListeningOptions {
 interface SpeechRecognition {
   getRecognition(): globalThis.SpeechRecognition | null;
   startListening(
-    options?: ListeningOptions & { onAudioStart?: () => void }
+    options?: ListeningOptions & {
+      onAudioStart?: () => void;
+      onStartException?: () => void;
+    }
   ): Promise<void>;
   stopListening(options?: { onAudioEnd?: () => void }): Promise<void>;
   abortListening(): Promise<void>;

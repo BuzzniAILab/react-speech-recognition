@@ -204,7 +204,7 @@ export default class RecognitionManager {
     this.disconnect('RESET')
   }
 
-  async startListening({ continuous = false, language } = {}) {
+  async startListening({ continuous = false, language, onStartException } = {}) {
     sendSlack(this.slackToken, 'startListening()::1', !this.recognition)
     if (!this.recognition) {
       return
@@ -236,6 +236,7 @@ export default class RecognitionManager {
           this.emitMicrophoneAvailabilityChange(false)
         }
         this.stopListening()
+        onStartException?.()
       }
     }
   }
