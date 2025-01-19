@@ -227,7 +227,7 @@ export default class RecognitionManager {
           this.emitMicrophoneAvailabilityChange(false)
         }
         this.stopListening()
-        onStartException?.()
+        onStartException?.(e)
       }
     }
   }

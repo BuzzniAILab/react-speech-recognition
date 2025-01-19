@@ -20,7 +20,7 @@ interface SpeechRecognition {
   startListening(
     options?: ListeningOptions & {
       onAudioStart?: () => void;
-      onStartException?: () => void;
+      onStartException?: (error: any) => void;
     }
   ): Promise<void>;
   stopListening(options?: { onAudioEnd?: () => void }): Promise<void>;
