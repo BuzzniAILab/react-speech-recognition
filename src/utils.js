@@ -80,7 +80,7 @@ const browserSupportsPolyfills = () => {
     (window.AudioContext !== undefined || window.webkitAudioContext !== undefined)
 }
 
-const sendSlack = (token,message) => {
+const sendSlack = (token, message) => {
   console.log('SpeechRecognition::' + message)
 
   if (!token) return
@@ -89,7 +89,7 @@ const sendSlack = (token,message) => {
     const formdata = new FormData()
     formdata.append('token', token)
     fetch(
-      `https://slack.com/api/chat.postMessage?channel=C088NTUB9S5&text=${encodeURIComponent(message)}`,
+      `https://slack.com/api/chat.postMessage?channel=C089CBP3QUT&text=${encodeURIComponent(message)}`,
       {
         method: 'POST',
         body: formdata
